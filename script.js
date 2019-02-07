@@ -46,7 +46,7 @@ $(document).ready(async function() {
   } else {
     // we're not logged in, let's just generate stories and stop there
     await generateStories();
-    hideAddStory();
+    //hideAddStory();
   }
 
   /**
@@ -66,7 +66,7 @@ $(document).ready(async function() {
     user = userInstance;
     LOGGED_IN = true;
     loginAndSubmitForm();
-    enableAddStory();
+    enableNewStoryForm();
   });
 
   /**
@@ -231,12 +231,12 @@ $(document).ready(async function() {
   
 
    //hides the add story form if not logged import
-   function hideAddStory(){
-    $addNewStoryLogIn.hide();
-   }
+  //  function hideAddStoryForm(){
+  //   $addNewStoryLogIn.hide();
+  //  }
 
-   function enableAddStory(){
-     $addNewStoryLogIn.show();
+   function enableNewStoryForm(){
+     $addNewStoryLogIn.toggle();
    }
 
 
