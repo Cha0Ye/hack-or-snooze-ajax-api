@@ -25,7 +25,8 @@ $(document).ready(async function() {
   const $ownStories = $("#my-articles");
   const $navLogin = $("#nav-login");
   const $navLogOut = $("#nav-logout");
-  const $addNewStoryLogIn = $(".new-story-section");
+  const $newStorySection = $(".new-story-section");
+  const $navFavorite = $("#nav-favorite");
 
   // if there is a token in localStorage, call User.stayLoggedIn
   //  to get an instance of User with the right details
@@ -67,6 +68,8 @@ $(document).ready(async function() {
     LOGGED_IN = true;
     loginAndSubmitForm();
     enableNewStoryForm();
+    enableFavoriteStories();
+
   });
 
   /**
@@ -165,6 +168,7 @@ $(document).ready(async function() {
     // render story markup
     const storyMarkup = $(
       `<li id="${story.storyId}">
+        <i class="far fa-star"></i>
           <a class="article-link" href="${story.url}" target="a_blank">
             <strong>${story.title}</strong>
            </a>
@@ -236,9 +240,12 @@ $(document).ready(async function() {
   //  }
 
    function enableNewStoryForm(){
-     $addNewStoryLogIn.toggle();
+    $newStorySection.toggle();
    }
 
+  function enableFavoriteStories(){
+    $navFavorite.toggle();
+  }
 
 
 });
