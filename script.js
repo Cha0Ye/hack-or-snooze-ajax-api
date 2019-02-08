@@ -27,6 +27,7 @@ $(document).ready(async function() {
   const $navLogOut = $("#nav-logout");
   const $newStorySection = $(".new-story-section");
   const $navFavorite = $("#nav-favorite");
+  const $allArticlesList = $("#all-articles-list");
 
   // if there is a token in localStorage, call User.stayLoggedIn
   //  to get an instance of User with the right details
@@ -246,6 +247,32 @@ $(document).ready(async function() {
   function enableFavoriteStories(){
     $navFavorite.toggle();
   }
+
+
+  //click on star to select or deselect favorite story
+  $allArticlesList.on('click','.fa-star', function(evt){
+
+    let $eventTarget = $(evt.target);
+    //using closest, find story ID of the star
+    let storyID = $eventTarget.closest("li").attr("id");
+    console.log("storyID",storyID);
+    //check if empty star is clicked => select as favorite
+    if($eventTarget.hasClass('far')){
+      //call post to favorite in database
+      //await postFavorite(user,storyID);
+      
+    }
+    // a filled start is clicked => unfavorite
+    else if ($eventTarget.hasClass('fas')){
+      //call post to API to deselect favorite 
+      //await postUnFavorite(user,storyID);
+      
+  
+    }
+    //toggle to filled fas start
+    $eventTarget.toggleClass('far fas');
+    //next step, write function to post to favorite
+  });
 
 
 });
