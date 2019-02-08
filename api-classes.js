@@ -46,8 +46,6 @@ class StoryList {
     );
       // console.log("response", response);
   }
-
-
 }
 
 /**
@@ -154,20 +152,18 @@ class User {
 
   //post user favorites to backend
   async postFavorite(user,storyID) {
-    // console.log("user:", user.username, "storyID:",storyID);
-    // const response =  await $.post(`${BASE_URL}/users/${user.username}/favorites/${storyID}`, { 
-    //   token: user.loginToken,
-    //   });
-
     const response = await $.ajax({
       url: `${BASE_URL}/users/${user.username}/favorites/${storyID}`,
       type: 'POST',
       data: {"token":user.loginToken}
-
-    });
+     });
       console.log(response);
+    // const response =  await $.post(`${BASE_URL}/users/${user.username}/favorites/${storyID}`, { 
+    //   token: user.loginToken,
+    //   });
   }
-//remove user favorite from backend
+
+  //remove user favorite from backend
   async postUnFavorite(user,storyID) {
     // console.log("user:", user.username, "storyID:",storyID);
     const response =  await $.ajax({
@@ -177,6 +173,16 @@ class User {
     });
     console.log(response);
   }
+
+  // // https://hack-or-snooze-v2.herokuapp.com/users/SevenS
+  // async getFavorites(user) {
+  //   const response =  await $.ajax({
+  //     url: `${BASE_URL}/users/${user.username}`,
+  //     type: '',
+  //     data: {"token":user.loginToken}
+  //   });
+  //   console.log(response);
+  // }
 }
 /**
  * Class to represent a single story. Has one method to update.

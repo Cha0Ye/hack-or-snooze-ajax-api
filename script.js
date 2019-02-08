@@ -30,6 +30,7 @@ $(document).ready(async function() {
   const $newStorySection = $(".new-story-section");
   const $navFavorite = $("#nav-favorite");
   const $allArticlesList = $("#all-articles-list");
+  const $favoritedArticles = $("#favorited-articles");
 
   // if there is a token in localStorage, call User.stayLoggedIn
   //  to get an instance of User with the right details
@@ -273,16 +274,22 @@ $(document).ready(async function() {
 
     if($navTarget.text() === 'favorite'){
       
-      //call function to show the favorites section
-      
+      // 1- call the function to GET request to API to pull user information which 
+      // includes all favorites
+      // 2- build HTML 
+      // 3- append
+      // 4- **** MAKE SURE at refresh favorite stays there (if including showFav in 
+      // stay loggede, in, it needs to be careful about what the tag is aa/favorite)
+      $allStoriesList.hide();
+      $favoritedArticles.show();
       $navFavorite.text('all');
     }
     else if($navTarget.text() === 'all'){
+      $allStoriesList.show();
+      $favoritedArticles.hide();
       $navFavorite.text('favorite');
     }
 
   });
-
-
 
 });
