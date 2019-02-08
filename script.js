@@ -15,6 +15,8 @@ if (token && username) {
   LOGGED_IN = true;
 }
 
+// enableFavoriteStories();
+
 $(document).ready(async function() {
   // cache some selectors we'll be using quite a bit
   const $allStoriesList = $("#all-articles-list");
@@ -36,7 +38,7 @@ $(document).ready(async function() {
     const userInstance = await User.stayLoggedIn();
     // we've got a user instance now
     user = userInstance;
-
+    enableFavoriteStories();
     // let's build out some stories
     await generateStories();
 
@@ -268,6 +270,8 @@ $(document).ready(async function() {
     //toggle far <-> fas 
     $eventTarget.toggleClass('far fas');
   });
+
+  
 
 
 });
