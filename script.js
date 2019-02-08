@@ -1,5 +1,5 @@
 // global flag to easily tell if we're logged in
-let LOGGED_IN = false;
+let loggedIn = false;
 
 // global storyList variable
 let storyList;
@@ -12,10 +12,10 @@ let token = localStorage.getItem("token");
 let username = localStorage.getItem("username");
 
 if (token && username) {
-  LOGGED_IN = true;
+  loggedIn = true;
 }
 
-// enableFavoriteStories();
+
 
 $(document).ready(async function() {
   // cache some selectors we'll be using quite a bit
@@ -34,12 +34,12 @@ $(document).ready(async function() {
   // if there is a token in localStorage, call User.stayLoggedIn
   //  to get an instance of User with the right details
   //  this is designed to run once, on page load
-  if (LOGGED_IN) {
+  if (loggedIn) {
     const userInstance = await User.stayLoggedIn();
     // we've got a user instance now
     user = userInstance;
     
-    enableFavoriteStories();
+    showFavNavForLoggedInUser();
     // let's build out some stories
     await generateStories();
 
@@ -69,10 +69,10 @@ $(document).ready(async function() {
     const userInstance = await User.login(username, password);
     // set the global user to the user instance
     user = userInstance;
-    LOGGED_IN = true;
+    loggedIn = true;
     loginAndSubmitForm();
     enableNewStoryForm();
-    enableFavoriteStories();
+    showFavNavForLoggedInUser();
 
   });
 
@@ -240,7 +240,7 @@ $(document).ready(async function() {
     $newStorySection.toggle();
    }
 
-  function enableFavoriteStories(){
+  function showFavNavForLoggedInUser(){
     $navFavorite.toggle();
   }
 
