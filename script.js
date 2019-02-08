@@ -39,15 +39,14 @@ $(document).ready(async function() {
     // we've got a user instance now
     user = userInstance;
     
-    showFavNavForLoggedInUser();
     // let's build out some stories
     await generateStories();
 
-    //add logic to show the add story form
-    //enableAddStory();
-
     // and then display the navigation
+
     showNavForLoggedInUser();
+    showFavNavForLoggedInUser();
+    enableNewStoryForm();
   } else {
     // we're not logged in, let's just generate stories and stop there
     await generateStories();
@@ -268,7 +267,21 @@ $(document).ready(async function() {
   });
 
   //make nav favorite toggle between all and favorite when clicked
+  $navFavorite.on('click',function(evt){
 
+    let $navTarget = $(evt.target);
+
+    if($navTarget.text() === 'favorite'){
+      
+      //call function to show the favorites section
+      
+      $navFavorite.text('all');
+    }
+    else if($navTarget.text() === 'all'){
+      $navFavorite.text('favorite');
+    }
+
+  });
 
 
 
