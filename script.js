@@ -36,7 +36,8 @@ $(document).ready(async function() {
     const userInstance = await User.stayLoggedIn();
     // we've got a user instance now
     user = userInstance;
-
+    
+    enableFavoriteStories()
     // let's build out some stories
     await generateStories();
 
@@ -233,13 +234,6 @@ $(document).ready(async function() {
        await generateStories();
    })
 
-  
-
-   //hides the add story form if not logged import
-  //  function hideAddStoryForm(){
-  //   $addNewStoryLogIn.hide();
-  //  }
-
    function enableNewStoryForm(){
     $newStorySection.toggle();
    }
@@ -253,21 +247,26 @@ $(document).ready(async function() {
   $allArticlesList.on('click','.fa-star', async function(evt){
 
     let $eventTarget = $(evt.target);
+
     //using closest, find story ID of the star
     let storyID = $eventTarget.closest("li").attr("id");
+
     //check if empty star is clicked => select as favorite
     if($eventTarget.hasClass('far')){
-      //call post to favorite in database
-      await storyList.postFavorite(user,storyID);
+      
+      await user.postFavorite(user,storyID); //call post to favorite in database
     }
     // a filled start is clicked => unfavorite
     else if ($eventTarget.hasClass('fas')){
-      //call post to API to deselect favorite 
-      await storyList.postUnFavorite(user,storyID);
+      
+      await user.postUnFavorite(user,storyID); //call post to API to deselect favorite 
     }
     //toggle far <-> fas 
     $eventTarget.toggleClass('far fas');
   });
+
+  //make nav favorite toggle between all and favorite when clicked
+
 
 
 });

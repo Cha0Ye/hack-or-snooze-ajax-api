@@ -47,31 +47,7 @@ class StoryList {
       // console.log("response", response);
   }
 
-//post favorites to backend
-  async postFavorite(user,storyID) {
-    // console.log("user:", user.username, "storyID:",storyID);
-    // const response =  await $.post(`${BASE_URL}/users/${user.username}/favorites/${storyID}`, { 
-    //   token: user.loginToken,
-    //   });
 
-    const response = await $.ajax({
-      url: `${BASE_URL}/users/${user.username}/favorites/${storyID}`,
-      type: 'POST',
-      data: {"token":user.loginToken}
-
-    });
-      console.log(response);
-  }
-//remove favorite from backend
-  async postUnFavorite(user,storyID) {
-    // console.log("user:", user.username, "storyID:",storyID);
-    const response =  await $.ajax({
-      url: `${BASE_URL}/users/${user.username}/favorites/${storyID}`,
-      type: 'DELETE',
-      data: {"token":user.loginToken}
-    });
-    console.log(response);
-  }
 }
 
 /**
@@ -174,6 +150,32 @@ class User {
       story => new Story(story)
     );
     return existingUser;
+  }
+
+  //post user favorites to backend
+  async postFavorite(user,storyID) {
+    // console.log("user:", user.username, "storyID:",storyID);
+    // const response =  await $.post(`${BASE_URL}/users/${user.username}/favorites/${storyID}`, { 
+    //   token: user.loginToken,
+    //   });
+
+    const response = await $.ajax({
+      url: `${BASE_URL}/users/${user.username}/favorites/${storyID}`,
+      type: 'POST',
+      data: {"token":user.loginToken}
+
+    });
+      console.log(response);
+  }
+//remove user favorite from backend
+  async postUnFavorite(user,storyID) {
+    // console.log("user:", user.username, "storyID:",storyID);
+    const response =  await $.ajax({
+      url: `${BASE_URL}/users/${user.username}/favorites/${storyID}`,
+      type: 'DELETE',
+      data: {"token":user.loginToken}
+    });
+    console.log(response);
   }
 }
 /**
