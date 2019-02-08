@@ -157,7 +157,7 @@ class User {
       type: 'POST',
       data: {"token":user.loginToken}
      });
-      console.log(response);
+      // console.log(response);
     // const response =  await $.post(`${BASE_URL}/users/${user.username}/favorites/${storyID}`, { 
     //   token: user.loginToken,
     //   });
@@ -171,18 +171,18 @@ class User {
       type: 'DELETE',
       data: {"token":user.loginToken}
     });
-    console.log(response);
+    // console.log(response);
   }
 
-  // // https://hack-or-snooze-v2.herokuapp.com/users/SevenS
-  // async getFavorites(user) {
-  //   const response =  await $.ajax({
-  //     url: `${BASE_URL}/users/${user.username}`,
-  //     type: '',
-  //     data: {"token":user.loginToken}
-  //   });
-  //   console.log(response);
-  // }
+  // https://hack-or-snooze-v2.herokuapp.com/users/SevenS
+  // 
+  async getFavoriteFromUserData(user) {
+    const response =  await $.get(`${BASE_URL}/users/${user.username}`,
+      {token: user.loginToken,
+    });
+    console.log("response from user data GET:",response);
+    user.favorites = response.user.favorites.map(story => new Story(story))
+  }
 }
 /**
  * Class to represent a single story. Has one method to update.

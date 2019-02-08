@@ -268,7 +268,7 @@ $(document).ready(async function() {
   });
 
   //make nav favorite toggle between all and favorite when clicked
-  $navFavorite.on('click',function(evt){
+  $navFavorite.on('click', async function(evt){
 
     let $navTarget = $(evt.target);
 
@@ -276,6 +276,7 @@ $(document).ready(async function() {
       
       // 1- call the function to GET request to API to pull user information which 
       // includes all favorites
+      await user.getFavoriteFromUserData(user); 
       // 2- build HTML 
       // 3- append
       // 4- **** MAKE SURE at refresh favorite stays there (if including showFav in 
