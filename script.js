@@ -15,6 +15,8 @@ if (token && username) {
   LOGGED_IN = true;
 }
 
+// enableFavoriteStories();
+
 $(document).ready(async function() {
   // cache some selectors we'll be using quite a bit
   const $allStoriesList = $("#all-articles-list");
@@ -37,7 +39,7 @@ $(document).ready(async function() {
     // we've got a user instance now
     user = userInstance;
     
-    enableFavoriteStories()
+    enableFavoriteStories();
     // let's build out some stories
     await generateStories();
 
@@ -266,6 +268,7 @@ $(document).ready(async function() {
   });
 
   //make nav favorite toggle between all and favorite when clicked
+
 
 
 
