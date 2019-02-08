@@ -228,7 +228,7 @@ $(document).ready(async function() {
          url
        };
       //  console.log(newStory);
-       console.log("user",user, "newStory", newStory);
+      //  console.log("user",user, "newStory", newStory);
        await storyList.addStory(user, newStory);
        await generateStories();
    })
@@ -250,24 +250,21 @@ $(document).ready(async function() {
 
 
   //click on star to select or deselect favorite story
-  $allArticlesList.on('click','.fa-star', function(evt){
+  $allArticlesList.on('click','.fa-star', async function(evt){
 
     let $eventTarget = $(evt.target);
     //using closest, find story ID of the star
     let storyID = $eventTarget.closest("li").attr("id");
-    console.log("storyID",storyID);
+    // console.log("storyID",storyID);
     //check if empty star is clicked => select as favorite
     if($eventTarget.hasClass('far')){
       //call post to favorite in database
-      //await postFavorite(user,storyID);
-      
+      await storyList.postFavorite(user,storyID);
     }
     // a filled start is clicked => unfavorite
     else if ($eventTarget.hasClass('fas')){
       //call post to API to deselect favorite 
       //await postUnFavorite(user,storyID);
-      
-  
     }
     //toggle to filled fas start
     $eventTarget.toggleClass('far fas');

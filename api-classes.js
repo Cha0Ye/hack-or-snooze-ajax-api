@@ -46,6 +46,16 @@ class StoryList {
     );
       // console.log("response", response);
   }
+
+  // https://hack-or-snooze-v2.herokuapp.com/users/username/favorites/storyId
+  async postFavorite(user,storyID) {
+    console.log("user:", user.username, "storyID:",storyID);
+    const response =  await $.post(`${BASE_URL}/users/${user.username}/favorites/${storyID}`, { 
+      token: user.loginToken,
+      });
+      console.log(response);
+  }
+
 }
 
 /**
