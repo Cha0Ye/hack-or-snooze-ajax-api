@@ -255,7 +255,6 @@ $(document).ready(async function() {
     let $eventTarget = $(evt.target);
     //using closest, find story ID of the star
     let storyID = $eventTarget.closest("li").attr("id");
-    // console.log("storyID",storyID);
     //check if empty star is clicked => select as favorite
     if($eventTarget.hasClass('far')){
       //call post to favorite in database
@@ -264,11 +263,10 @@ $(document).ready(async function() {
     // a filled start is clicked => unfavorite
     else if ($eventTarget.hasClass('fas')){
       //call post to API to deselect favorite 
-      //await postUnFavorite(user,storyID);
+      await storyList.postUnFavorite(user,storyID);
     }
-    //toggle to filled fas start
+    //toggle far <-> fas 
     $eventTarget.toggleClass('far fas');
-    //next step, write function to post to favorite
   });
 
 
