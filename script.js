@@ -172,7 +172,26 @@ $(document).ready(async function() {
     // render story markup
     const storyMarkup = $(
       `<li id="${story.storyId}">
-        <i class="far fa-star"></i>
+        <i class="fa-star far"></i>
+          <a class="article-link" href="${story.url}" target="a_blank">
+            <strong>${story.title}</strong>
+           </a>
+          <small class="article-author">by ${story.author}</small>
+          <small class="article-hostname ${hostName}">(${hostName})</small>
+          <small class="article-username">posted by ${story.username}</small>
+          </li>`
+    );
+
+    return storyMarkup;
+  }
+
+  function generateFavoriteHTML(story) {
+    let hostName = getHostName(story.url);
+
+    // render story markup
+    const storyMarkup = $(
+      `<li id="${story.storyId}">
+        <i class="fa-star fas"></i>
           <a class="article-link" href="${story.url}" target="a_blank">
             <strong>${story.title}</strong>
            </a>
@@ -277,7 +296,12 @@ $(document).ready(async function() {
       // 1- call the function to GET request to API to pull user information which 
       // includes all favorites
       await user.getFavoriteFromUserData(user); 
-      // 2- build HTML 
+      
+      // 2- call build HTML function
+      user.favorites.forEach(function(story) {
+      const result = generateFavoriteHTML(story);
+      $favoritedArticles.append(result);
+    }); 
       // 3- append
       // 4- **** MAKE SURE at refresh favorite stays there (if including showFav in 
       // stay loggede, in, it needs to be careful about what the tag is aa/favorite)

@@ -180,7 +180,7 @@ class User {
     const response =  await $.get(`${BASE_URL}/users/${user.username}`,
       {token: user.loginToken,
     });
-    console.log("response from user data GET:",response);
+    // console.log("response from user data GET:",response);
     user.favorites = response.user.favorites.map(story => new Story(story))
   }
 }
