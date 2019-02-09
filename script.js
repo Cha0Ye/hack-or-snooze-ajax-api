@@ -31,6 +31,7 @@ $(document).ready(async function() {
   const $navFavorite = $("#nav-favorite");
   const $allArticlesList = $("#all-articles-list");
   const $favoritedArticles = $("#favorited-articles");
+  
 
   // if there is a token in localStorage, call User.stayLoggedIn
   //  to get an instance of User with the right details
@@ -48,6 +49,8 @@ $(document).ready(async function() {
     showNavForLoggedInUser();
     showFavNavForLoggedInUser();
     enableNewStoryForm();
+    // addStarLoggedIn();
+    
   } else {
     // we're not logged in, let's just generate stories and stop there
     await generateStories();
@@ -72,6 +75,7 @@ $(document).ready(async function() {
     loggedIn = true;
     loginAndSubmitForm();
     enableNewStoryForm();
+    // addStarLoggedIn();
     showFavNavForLoggedInUser();
 
   });
@@ -172,7 +176,7 @@ $(document).ready(async function() {
     // render story markup
     const storyMarkup = $(
       `<li id="${story.storyId}">
-        <i class="fa-star far"></i>
+        <i class="star"></i>
           <a class="article-link" href="${story.url}" target="a_blank">
             <strong>${story.title}</strong>
            </a>
@@ -182,6 +186,7 @@ $(document).ready(async function() {
           </li>`
     );
 
+    
     return storyMarkup;
   }
 
@@ -191,7 +196,7 @@ $(document).ready(async function() {
     // render story markup
     const storyMarkup = $(
       `<li id="${story.storyId}">
-        <i class="fa-star fas"></i>
+        <i class="star fa-star fas"></i>
           <a class="article-link" href="${story.url}" target="a_blank">
             <strong>${story.title}</strong>
            </a>
@@ -200,6 +205,7 @@ $(document).ready(async function() {
           <small class="article-username">posted by ${story.username}</small>
           </li>`
     );
+
 
     return storyMarkup;
   }
@@ -263,9 +269,16 @@ $(document).ready(async function() {
     $navFavorite.toggle();
   }
 
+  function addStarLoggedIn(){
+
+    const $star =$(".star");
+    $star.addClass("fa-star far")
+
+  }
+
 
   //click on star to select or deselect favorite story
-  $allArticlesList.on('click','.fa-star', async function(evt){
+  $allStoriesList.on('click','.fa-star', async function(evt){
 
     let $eventTarget = $(evt.target);
 
@@ -286,6 +299,31 @@ $(document).ready(async function() {
     $eventTarget.toggleClass('far fas');
   });
 
+  //FAVORITES :click on star in to select or deselect favorite story
+  $favoritedArticles.on('click','.fa-star', async function(evt){
+
+    let $eventTarget = $(evt.target);
+
+    //using closest, find story ID of the star
+    let storyID = $eventTarget.closest("li").attr("id");
+
+    //check if empty star is clicked => select as favorite
+    if($eventTarget.hasClass('far')){
+      
+      await user.postFavorite(user,storyID); //call post to favorite in database
+      await user.getFavoriteFromUserData(user); 
+
+    }
+    // a filled start is clicked => unfavorite
+    else if ($eventTarget.hasClass('fas')){
+      
+      await user.postUnFavorite(user,storyID); //call post to API to deselect favorite 
+      await user.getFavoriteFromUserData(user); 
+    }
+    //toggle far <-> fas 
+    $eventTarget.toggleClass('far fas');
+  });
+
   //make nav favorite toggle between all and favorite when clicked
   $navFavorite.on('click', async function(evt){
 
@@ -298,6 +336,7 @@ $(document).ready(async function() {
       await user.getFavoriteFromUserData(user); 
       
       // 2- call build HTML function
+      $favoritedArticles.empty();
       user.favorites.forEach(function(story) {
       const result = generateFavoriteHTML(story);
       $favoritedArticles.append(result);
@@ -311,6 +350,7 @@ $(document).ready(async function() {
     }
     else if($navTarget.text() === 'all'){
       $allStoriesList.show();
+
       $favoritedArticles.hide();
       $navFavorite.text('favorite');
     }
